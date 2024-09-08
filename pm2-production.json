@@ -6,7 +6,6 @@
       "script": "src/app.js",
       "instances": 1,
       "wait_ready": true,
-      "listen_timeout": 30000,
       "env": {
         "NODE_ENV": "production",
         "PORT": 2000

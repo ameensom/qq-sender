@@ -8,8 +8,8 @@ export default async (req, res) => {
       toNumber: Joi.string(),
       templateName: Joi.string(),
       secretKey: Joi.string().required(),
-      customData: Joi.object().required().keys({
-        imageURL: Joi.string().required()
+      customData: Joi.object().keys({
+        imageURL: Joi.string()
       })
     }).required();
 
