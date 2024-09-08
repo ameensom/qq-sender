@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "module": "es2020",
+    "paths": {
+      "q-notifications/helpers/*": [
+        "helpers/*"
+      ],
+      "q-notifications/modules/*": [
+        "modules/*"
+      ],
+      "q-notifications/test/*": [
+        "test/*"
+      ],
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

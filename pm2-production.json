@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "name": "q-notifications-0",
+      "exec_mode": "cluster",
+      "script": "src/app.js",
+      "instances": 1,
+      "wait_ready": true,
+      "listen_timeout": 30000,
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 2000
+      },
+      "node_args": "--max_old_space_size=3000"
+    }
+  ]
+}
