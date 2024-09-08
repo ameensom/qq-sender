@@ -2,6 +2,7 @@ const { FACEBOOK_APP_SECRET } = process.env;
 import WhatsappNotification from 'q-notifications/modules/whatsapp/index.js';
 import * as Whatsapp from 'q-notifications/helpers/whatsapp/index.js';
 import crypto from 'crypto';
+import whatsappSentMessagesModel from '../whatsapp.sent.messages.model';
 
 export default async (req, res) => {
   try {
@@ -14,15 +15,22 @@ export default async (req, res) => {
       return res.sendStatus(403);
     }
 
-    const [{ wa_id: phone }] = body.entry[0]?.changes[0]?.value?.contacts || [{ wa_id: '' }];
+    const valueObject = body.entry[0]?.changes[0]?.value;
+    const [{ wa_id: phone }] = valueObject?.contacts || [{ wa_id: '' }];
     const whatsAppNotificaiton = await WhatsappNotification.Model.create({ ...body, phone });
-
-    const [{ id: messageID, type: messageType }] = body.entry[0]?.changes[0]?.value?.messages || [{ id: '' }];
+    const [{ id: messageID, type: messageType }] = valueObject?.messages || [{ id: '', type: '' }];
 
 
 
     if (messageID && phone) {
       await Whatsapp.changeMessageStatus({ status: 'read', messageID, phone });
+    }
+
+    if (valueObject?.statuses?.length) {
+      const [{ id, status }] = valueObject?.statuses || [{ id: '', status: '' }];
+      if (id && status) {
+        await whatsappSentMessagesModel.Model.updateOne({ 'messages.id': id }, { status });
+      }
     }
 
 
@@ -31,9 +39,6 @@ export default async (req, res) => {
       await WhatsappNotification.Model.updateOne({ _id: whatsAppNotificaiton._id }, { message: message.body });
       await WhatsappNotification.handleMessageText({ messageID, phone, whatsAppNotificaiton });
     }
-
-
-
 
 
     return res.sendStatus(200);
