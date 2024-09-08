@@ -2,8 +2,8 @@ import rp from 'request-promise';
 
 const { WHATSAPP_PHONE_ID, WHATSAPP_URL, WHATSAPP_ACCESS_TOKEN } = process.env;
 
-async function sendTemplateMessage ({ templateName, phone, customData }) {
-  const templateComponents = getTemplateComponents({ customData });
+async function sendTemplateMessage ({ templateName, phone, imageURL }) {
+  const templateComponents = getTemplateComponents({ imageURL });
   try {
     const requestOptions = {
       uri: `${WHATSAPP_URL}/${WHATSAPP_PHONE_ID}/messages`,
@@ -44,17 +44,17 @@ async function sendTemplateMessage ({ templateName, phone, customData }) {
   }
 }
 
-function getTemplateComponents ({ templateVariables, buttonUrlParam, customData }) {
+function getTemplateComponents ({ imageURL }) {
 
   const components = [];
-  if (customData?.imageURL) {
+  if (imageURL) {
     components.push({
       type: 'header',
       parameters: [
         {
           type: 'image',
           image: {
-            link: customData.imageURL
+            link: imageURL
           }
         }
       ]

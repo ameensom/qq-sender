@@ -8,9 +8,7 @@ export default async (req, res) => {
       toNumber: Joi.string(),
       templateName: Joi.string(),
       secretKey: Joi.string().required(),
-      customData: Joi.object().keys({
-        imageURL: Joi.string()
-      })
+      imageURL: Joi.string()
     }).required();
 
     const { error } = Joi.validateAndConvert({ object: req, property: 'body', expectedObject: expectedBody });
@@ -20,7 +18,7 @@ export default async (req, res) => {
   }
 
 
-  const { toNumber, templateName, secretKey, customData } = req.body;
+  const { toNumber, templateName, secretKey, imageURL } = req.body;
   if (secretKey !== process.env.FACEBOOK_APP_SECRET) {
     return res.status(403).json({ case: 1, message: 'Invalid secret key' });
   }
@@ -31,7 +29,7 @@ export default async (req, res) => {
   const phone = toNumber[0] === '+' ? toNumber : `+${toNumber}`;
 
 
-  const sendMessage = await Whatsapp.sendMessage({ templateName, phone, customData });
+  const sendMessage = await Whatsapp.sendMessage({ templateName, phone, imageURL });
 
   const { body } = sendMessage;
 
