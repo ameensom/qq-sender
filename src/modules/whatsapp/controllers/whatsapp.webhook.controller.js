@@ -2,7 +2,7 @@ const { FACEBOOK_APP_SECRET } = process.env;
 import WhatsappNotification from 'q-notifications/modules/whatsapp/index.js';
 import * as Whatsapp from 'q-notifications/helpers/whatsapp/index.js';
 import crypto from 'crypto';
-import whatsappSentMessagesModel from '../whatsapp.sent.messages.model';
+import WhatsappSentMessagesModel from '../whatsapp.sent.messages.model.js';
 
 export default async (req, res) => {
   try {
@@ -29,7 +29,7 @@ export default async (req, res) => {
     if (valueObject?.statuses?.length) {
       const [{ id, status }] = valueObject?.statuses || [{ id: '', status: '' }];
       if (id && status) {
-        await whatsappSentMessagesModel.Model.updateOne({ 'messages.id': id }, { status });
+        await WhatsappSentMessagesModel.updateOne({ 'messages.id': id }, { status });
       }
     }
 
