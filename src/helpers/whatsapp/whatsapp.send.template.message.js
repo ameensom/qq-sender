@@ -1,5 +1,9 @@
 import rp from 'request-promise';
+import dotenv from 'dotenv';
 
+dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` });
+
+process.env.PORT = process.env.PORT || 2000;
 const { WHATSAPP_PHONE_ID, WHATSAPP_URL, WHATSAPP_ACCESS_TOKEN } = process.env;
 
 async function sendTemplateMessage ({ templateName, phone, imageURL }) {
