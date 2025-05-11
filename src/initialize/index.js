@@ -32,7 +32,7 @@ async function run () {
     //   continue;
     // }
     // const numbers = readFile.toString().split('\n');
-    await sendMessages(['966569996970']);
+    await sendMessages(['966550082198']);
     console.log(`File ${file} done`);
   }
 
@@ -53,7 +53,7 @@ async function run () {
       await whatsappSentMessage.save();
 
       const phone = toNumber[0] === '+' ? toNumber : `+${toNumber}`;
-      const text = 'أمين';
+      const text = 'عبدالرحمن';
 
       const sendMessage = await whatsapp.sendMessage({ templateName, phone, imageURL, text });
 
