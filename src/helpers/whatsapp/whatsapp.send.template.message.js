@@ -6,8 +6,8 @@ dotenv.config({ path: `./env/${process.env.NODE_ENV}.env` });
 process.env.PORT = process.env.PORT || 2000;
 const { WHATSAPP_PHONE_ID, WHATSAPP_URL, WHATSAPP_ACCESS_TOKEN } = process.env;
 
-async function sendTemplateMessage ({ templateName, phone, imageURL }) {
-  const templateComponents = getTemplateComponents({ imageURL });
+async function sendTemplateMessage ({ templateName, phone, imageURL, text }) {
+  const templateComponents = getTemplateComponents({ imageURL, text });
   try {
     const requestOptions = {
       uri: `${WHATSAPP_URL}/${WHATSAPP_PHONE_ID}/messages`,
@@ -24,6 +24,7 @@ async function sendTemplateMessage ({ templateName, phone, imageURL }) {
           language: {
             code: 'ar'
           },
+
           components: templateComponents
         }
       },
@@ -48,7 +49,7 @@ async function sendTemplateMessage ({ templateName, phone, imageURL }) {
   }
 }
 
-function getTemplateComponents ({ imageURL }) {
+function getTemplateComponents ({ imageURL, text }) {
 
   const components = [];
   if (imageURL) {
@@ -60,6 +61,18 @@ function getTemplateComponents ({ imageURL }) {
           image: {
             link: imageURL
           }
+        }
+      ]
+    });
+  }
+
+  if (text) {
+    components.push({
+      type: 'body',
+      parameters: [
+        {
+          type: 'text',
+          text
         }
       ]
     });

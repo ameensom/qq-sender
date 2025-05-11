@@ -19,20 +19,20 @@ async function run () {
 
   const payload = {
     toNumber: '',
-    templateName: 'vendors_nd24_2',
-    secretKey: '235298500e61e12822f447fb0450f320',
-    imageURL: 'https://imagedelivery.net/QaRL2Jwv2WLGn7ubY2xCEQ/d7016f63-eab4-434d-9f22-8ff9df7ade00/temp'
+    templateName: 'qawafel_is_back',
+
+    imageURL: 'https://ameensom.com/image.png'
   };
   let count = 1;
 
   const files = [1];
   for (const file of files) {
-    const readFile = await fs.readFile(`./a0000${file}.csv`).catch(console.error);
-    if (!readFile) {
-      continue;
-    }
-    const numbers = readFile.toString().split('\n');
-    await sendMessages(numbers);
+    // const readFile = await fs.readFile(`./a0000${file}.csv`).catch(console.error);
+    // if (!readFile) {
+    //   continue;
+    // }
+    // const numbers = readFile.toString().split('\n');
+    await sendMessages(['966569996970']);
     console.log(`File ${file} done`);
   }
 
@@ -53,9 +53,9 @@ async function run () {
       await whatsappSentMessage.save();
 
       const phone = toNumber[0] === '+' ? toNumber : `+${toNumber}`;
+      const text = 'أمين';
 
-
-      const sendMessage = await whatsapp.sendMessage({ templateName, phone, imageURL });
+      const sendMessage = await whatsapp.sendMessage({ templateName, phone, imageURL, text });
 
       const { body } = sendMessage;
 
